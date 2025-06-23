@@ -15,20 +15,19 @@ const pool = mysql.createPool({
 
 const promisePool = pool.promise();
 
-// Function to check database connection
 export const checkConnection = async () => {
   try {
     const connection = await promisePool.getConnection();
-    console.log(' Database connected successfully');
+    console.log('✅ Database connected successfully');
     connection.release();
     return true;
   } catch (error) {
-    console.error(' Database connection failed:', error.message);
+    console.error('❌ Database connection failed:', error.message);
     return false;
   }
 };
 
-// Test connection on startup
+
 checkConnection();
 
 export default promisePool;

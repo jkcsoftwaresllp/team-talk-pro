@@ -5,8 +5,10 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 
-import authRoutes from './routes/auth.js';
-import db, { checkConnection } from './config/database.js';
+import { AppContainer } from './config/app.js';
+import { createAuthRoutes } from './src/routes/authRoutes.js';
+import { ErrorMiddleware } from './src/middleware/ErrorMiddleware.js';
+import { Response } from './src/utils/Response.js';
 
 dotenv.config();
 
@@ -19,6 +21,10 @@ const io = new Server(server, {
   }
 });
 
+
+const container = new AppContainer();
+
+
 app.use(cors({
   origin: 'http://localhost:3000',
   credentials: true
@@ -26,36 +32,25 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/api/auth', authRoutes);
+// Routes
+app.use('/api/auth', createAuthRoutes(
+  container.get('authController'),
+  container.get('authMiddleware')
+));
 
+// Health check endpoint
 app.get('/api/health', async (req, res) => {
-  const dbConnected = await checkConnection();
+  const dbService = container.get('databaseService');
+  const dbConnected = await dbService.testConnection();
   
-  res.json({ 
-    status: 'OK', 
-    message: 'TeamTalk Pro+ Backend is running!',
+  res.json(Response.success('TeamTalk Pro+ Backend is running!', {
     database: dbConnected ? 'Connected' : 'Disconnected',
     timestamp: new Date().toISOString()
-  });
+  }));
 });
 
-// Database-specific health check
-app.get('/api/health/db', async (req, res) => {
-  try {
-    const [result] = await db.execute('SELECT 1 as test');
-    res.json({
-      status: 'Connected',
-      message: 'Database connection is healthy',
-      test_query: result[0]
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: 'Error',
-      message: 'Database connection failed',
-      error: error.message
-    });
-  }
-});
+// Error handling middleware
+app.use(ErrorMiddleware.handle);
 
 // Socket.IO connection handling
 io.on('connection', (socket) => {
@@ -73,15 +68,12 @@ io.on('connection', (socket) => {
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, async () => {
-  console.log(` TeamTalk Pro+ Backend running on port ${PORT}`);
-  console.log(` Socket.IO server ready`);
-  console.log(` Health check: http://localhost:${PORT}/api/health`);
+  console.log(`🚀 TeamTalk Pro+ Backend running on port ${PORT}`);
+  console.log(`📡 Socket.IO server ready`);
+  console.log(`🌐 Health check: http://localhost:${PORT}/api/health`);
   
-  // Check database connection on startup
-  const dbStatus = await checkConnection();
-  if (dbStatus) {
-    console.log(' Database connection verified');
-  } else {
-    console.log('  Database connection issues detected');
-  }
+  // Test database connection
+  const dbService = container.get('databaseService');
+  const dbStatus = await dbService.testConnection();
+  console.log(`🗄️  Database: ${dbStatus ? 'Connected' : 'Disconnected'}`);
 });
