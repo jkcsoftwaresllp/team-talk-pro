@@ -1,0 +1,41 @@
+.container {
+  padding: 1rem;
+}
+
+.fileList {
+  list-style: none;
+  padding: 0;
+}
+
+.fileItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #fff;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-left: 4px solid #ffc107;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+}
+
+.fileItem a {
+  margin-right: 8px;
+  color: #007bff;
+  font-size: 0.9rem;
+}
+
+.meta {
+  font-size: 0.8rem;
+  color: gray;
+  margin-top: 4px;
+}
+
+.deleteBtn {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
