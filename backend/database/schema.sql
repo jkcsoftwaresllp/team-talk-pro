@@ -1,8 +1,5 @@
-CREATE DATABASE IF NOT EXISTS teamtalk_pro;
-USE teamtalk_pro;
-
 -- Users table
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
@@ -14,8 +11,8 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Chats table 
-CREATE TABLE chats (
+-- Chats table (for both group and direct chats)
+CREATE TABLE IF NOT EXISTS chats (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100),
     type ENUM('group', 'direct') NOT NULL,
@@ -25,7 +22,7 @@ CREATE TABLE chats (
 );
 
 -- Chat members
-CREATE TABLE chat_members (
+CREATE TABLE IF NOT EXISTS chat_members (
     id INT PRIMARY KEY AUTO_INCREMENT,
     chat_id INT,
     user_id INT,
@@ -36,7 +33,7 @@ CREATE TABLE chat_members (
 );
 
 -- Messages table
-CREATE TABLE messages (
+CREATE TABLE IF NOT EXISTS messages (
     id INT PRIMARY KEY AUTO_INCREMENT,
     chat_id INT,
     sender_id INT,
@@ -54,7 +51,7 @@ CREATE TABLE messages (
 );
 
 -- Message reactions
-CREATE TABLE message_reactions (
+CREATE TABLE IF NOT EXISTS message_reactions (
     id INT PRIMARY KEY AUTO_INCREMENT,
     message_id INT,
     user_id INT,
