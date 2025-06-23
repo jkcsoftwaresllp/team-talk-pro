@@ -1,11 +1,16 @@
 import { Router } from 'express';
 import { authMiddleware } from '../middleware/auth.middleware.js';
-import { getProfile } from '../controllers/user/profile.controller.js';
+
+import userRoutes from './user.routes.js';
+import chatRoutes from './chat.routes.js';
+import messageRoutes from './message.routes.js';
 
 const router = Router();
 
-router.use(authMiddleware); // Protect all routes below
+router.use(authMiddleware);
 
-router.get('/user/profile', getProfile); // example private route
+router.use('/user', userRoutes);
+router.use('/chats', chatRoutes);
+router.use('/messages', messageRoutes);
 
 export default router;
