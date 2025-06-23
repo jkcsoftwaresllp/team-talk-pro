@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import styles from "./UserList.module.css";
 import { toast } from "react-toastify";
 
-// import { getAllUsers, banUser, removeUser } from "../../api/adminApi"; // Uncomment later
+import { getAllUsers, banUser, removeUser } from "../../api/adminApi"; // Uncomment later
 
 function UserList() {
   const [users, setUsers] = useState([]);
 
-  const useMockData = true; // 🔁 Toggle this to false when backend is ready
+  const useMockData = false; // 🔁 Toggle this to false when backend is ready
 
   useEffect(() => {
     const fetchUsers = async () => {

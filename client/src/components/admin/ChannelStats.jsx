@@ -3,12 +3,12 @@ import styles from "./ChannelStats.module.css";
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
 } from "recharts";
-// import { getChannelStats } from "../../api/adminApi"; // Uncomment when backend is ready
+import { getChannelStats } from "../../api/adminApi"; // Uncomment when backend is ready
 import { toast } from "react-toastify";
 
 function ChannelStats() {
   const [channels, setChannels] = useState([]);
-  const useMockData = true;
+  const useMockData = false; // Toggle this to false when backend is ready
 
   useEffect(() => {
     const fetchStats = async () => {

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import styles from "./FileManager.module.css";
-// import { getSpamFiles, deleteFile } from "../../api/adminApi"; // Uncomment later
+import { getSpamFiles, deleteFile } from "../../api/adminApi"; // Uncomment later
 import { toast } from "react-toastify";
 
 function FileManager() {
   const [files, setFiles] = useState([]);
-  const useMockData = true;
+  const useMockData = false; // Toggle this to false when backend is ready
 
   useEffect(() => {
     const fetchFiles = async () => {

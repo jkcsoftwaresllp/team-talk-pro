@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import styles from "./MessageManager.module.css";
-// import { getSpamMessages, deleteMessage } from "../../api/adminApi"; // Uncomment later
+import { getSpamMessages, deleteMessage } from "../../api/adminApi"; // Uncomment later
 import { toast } from "react-toastify";
 
 function MessageManager() {
   const [messages, setMessages] = useState([]);
-  const useMockData = true;
+  const useMockData = false; // Toggle this to false when backend is ready 
 
   useEffect(() => {
     const fetchMessages = async () => {

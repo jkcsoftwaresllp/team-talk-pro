@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import styles from "./RecycleBin.module.css";
-// import { getDeletedFiles, restoreFile, permanentlyDeleteFile } from "../../api/adminApi";
+import { getDeletedFiles, restoreFile, permanentlyDeleteFile } from "../../api/adminApi";
 import { toast } from "react-toastify";
 
 function RecycleBin() {
   const [deletedFiles, setDeletedFiles] = useState([]);
-  const useMockData = true;
+  const useMockData = false; // Toggle this to false when backend is ready
 
   useEffect(() => {
     const fetchDeletedFiles = async () => {
