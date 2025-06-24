@@ -34,15 +34,22 @@ app.use("/api/upload", uploadRoutes);
 // Socket.IO
 io.on("connection", (socket) => {
   console.log("Client connected:", socket.id);
+  socket.on("setup",(userData)=>{
+    socket.join(userData.id);
+    console.log(`${userData.username} joined their private room`);
+    socket.emit("connected");
+  });
+
+  
 
   socket.on("join_chat", ({ chatId }) => {
     socket.join(`chat_${chatId}`);
   });
 
   socket.on("send_message", (msg) => {
-    io.to(`chat_${msg.chatId}`).emit("receive_message", msg);
+    io.to(`chat_${msg.chatId}`).emit("message received", msg);
   });
-
+  
   socket.on("react_message", ({ msgId, emoji }) => {
     io.emit("message_reacted", { msgId, emoji });
   });

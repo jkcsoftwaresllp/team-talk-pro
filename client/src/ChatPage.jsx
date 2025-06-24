@@ -10,18 +10,27 @@ const ChatPage = () => {
   const [replyTo, setReplyTo] = useState(null);
   const [file, setFile] = useState(null);
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
-    socket.emit("join_chat", { chatId: 1 }); // dummy chatId
-    socket.on("receive_message", (msg) => {
-      setMessages((prev) => [...prev, msg]);
+    if (user) {
+      socket.emit("setup", user);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    socket.on("message received", (newMsg) => {
+      setMessages((prev) => [...prev, newMsg]);
     });
-    return () => socket.off("receive_message");
+
+    return () => socket.off("message received");
   }, []);
+  
 
   const handleSend = () => {
     const message = {
       chatId: 1,
-      senderId: 1, // replace with current user ID
+      senderId: user?.id,
       content: newMsg,
       replyTo: replyTo?.id || null,
       isForwarded: false,
@@ -44,7 +53,7 @@ const ChatPage = () => {
     const message = {
       ...msg,
       chatId: 1,
-      senderId: 1,
+      senderId: user?.id,
       isForwarded: true,
       originalSenderId: msg.senderId,
     };
