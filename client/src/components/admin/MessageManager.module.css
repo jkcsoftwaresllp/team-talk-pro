@@ -1,0 +1,33 @@
+.container {
+  padding: 1rem;
+}
+
+.messageList {
+  list-style: none;
+  padding: 0;
+}
+
+.messageItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #fff;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-left: 4px solid #ff4d4f;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+}
+
+.messageItem p {
+  margin: 4px 0 0;
+}
+
+.deleteBtn {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
