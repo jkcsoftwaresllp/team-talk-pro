@@ -1,0 +1,55 @@
+{
+  "name": "teamtalk-pro-backend",
+  "version": "1.0.0",
+  "description": "Backend for TeamTalk Pro+",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "setup-db": "node scripts/setup-db.js",
+    "test-backend": "node test-backend.js",
+    "test-db": "node test-db.js",
+    "check-db": "node -e \"import('./config/database.js').then(({checkConnection}) => checkConnection().then(() => process.exit(0)))\"",
+    "lint": "eslint src/ --ext .js",
+    "lint:fix": "eslint src/ --ext .js --fix"
+  },
+  "keywords": [
+    "chat",
+    "real-time",
+    "socket.io",
+    "express",
+    "mysql",
+    "jwt",
+    "solid-principles"
+  ],
+  "author": "Nitin Sharma",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2",
+    "mysql2": "^3.6.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "eslint": "^8.50.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/teamtalk-pro-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/teamtalk-pro-backend/issues"
+  },
+  "homepage": "https://github.com/your-username/teamtalk-pro-backend#readme"
+}
