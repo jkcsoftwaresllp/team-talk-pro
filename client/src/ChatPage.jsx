@@ -19,13 +19,14 @@ const ChatPage = () => {
   }, [user]);
 
   useEffect(() => {
-    socket.on("message received", (newMsg) => {
+    const handleReceive = (newMsg) => {
       setMessages((prev) => [...prev, newMsg]);
-    });
+    };
 
-    return () => socket.off("message received");
+    socket.on("message received", handleReceive);
+
+    return () => socket.off("message received", handleReceive);
   }, []);
-  
 
   const handleSend = () => {
     const message = {
@@ -36,6 +37,7 @@ const ChatPage = () => {
       isForwarded: false,
       originalSenderId: null,
     };
+
     socket.emit("send_message", message);
     setNewMsg("");
     setReplyTo(null);
@@ -57,6 +59,7 @@ const ChatPage = () => {
       isForwarded: true,
       originalSenderId: msg.senderId,
     };
+
     socket.emit("send_message", message);
   };
 
