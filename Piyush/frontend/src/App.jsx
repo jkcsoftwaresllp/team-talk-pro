@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import RegistrationForm from './components/jsx/RegistrationForm';
+import LoginForm from './components/jsx/LoginForm';
+import HomePage from './components/jsx/HomePage';
+import ChatPage from './components/jsx/ChatPage';
 import './App.css';
 
 function App() {
@@ -9,9 +12,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<RegistrationForm />} />
-        <Route path="/login" element={<div>Login Page (To be implemented)</div>} />
-        <Route path="/" element={<RegistrationForm />} />
+        {/* <Route path="/login" element={<LoginForm />} /> */} <Route path="/login" element={<LoginForm setUser={setUser} />} />
+        <Route path="/chat" element={<ChatPage />} />
       </Routes>
     </BrowserRouter>
   );

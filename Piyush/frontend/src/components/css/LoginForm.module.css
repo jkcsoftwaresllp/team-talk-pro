@@ -1,13 +1,10 @@
-body{
-  background: linear-gradient(to right, #ff7e5f, #feb47b);
-}
-
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  background-color: #191919;
   background: linear-gradient(to right, #ff7e5f, #feb47b);
   padding: 1rem;
 }
