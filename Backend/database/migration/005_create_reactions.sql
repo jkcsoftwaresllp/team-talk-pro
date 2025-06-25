@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS message_reactions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  message_id INT,
+  user_id INT,
+  emoji VARCHAR(10),
+  reacted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
