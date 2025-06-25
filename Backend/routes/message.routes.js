@@ -7,6 +7,8 @@ import { reactToMessage } from '../controllers/message/reactToMessage.controller
 import { getMessageReactions } from '../controllers/message/getReactions.controller.js';
 import { uploadFileMessage } from '../controllers/message/uploadFile.controller.js';
 import { upload } from '../middleware/upload.middleware.js';
+import { getMessagesPaginated } from '../controllers/message/getMessagesPaginated.controller.js.js';
+import { searchMessages } from '../controllers/message/searchMessages.controller.js';
 
 const router = Router();
 
@@ -30,5 +32,9 @@ router.get('/:messageId/reactions', getMessageReactions);
 
 // ✅ Upload a file message
 router.post('/upload', upload.single('file'), uploadFileMessage);
+
+router.get('/:chatId', getMessagesPaginated);
+
+router.get('/search', searchMessages);
 
 export default router;
