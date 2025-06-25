@@ -2,9 +2,10 @@
 
 import axios from "axios";
 
+
 const API = axios.create({
-  baseURL: "https://your-backend-url.com/api/admin", // 🔁 Replace with real backend URL
-  withCredentials: true,
+  baseURL: "http://localhost:5000/api/admin", 
+  withCredentials: true,                      
 });
 
 // ==========================
@@ -12,7 +13,7 @@ const API = axios.create({
 // ==========================
 export const getAllUsers = () => API.get("/users");
 export const banUser = (id) => API.patch(`/users/${id}/ban`);
-export const removeUser = (id) => API.delete(`/users/${id}`);
+export const removeUser = (id) => API.delete(`/users/${id}`); 
 
 // ==========================
 // CHANNEL STATS
