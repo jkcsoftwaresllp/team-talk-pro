@@ -82,7 +82,6 @@ router.post('/:messageId/reactions', authenticateToken, async (req, res) => {
     }
 });
 
-// Test route
 router.get('/test', (req, res) => {
     res.json({ message: 'Messages route working' });
 });
