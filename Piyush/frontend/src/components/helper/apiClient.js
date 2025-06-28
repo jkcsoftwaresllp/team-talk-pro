@@ -10,8 +10,13 @@ const apiClient = {
     return res.data;
   },
 
-    login: async (formData) => {
+  login: async (formData) => {
     const res = await API.post('/user/login', formData);
+    return res.data;
+  },
+
+  createTestUsers: async () => {
+    const res = await API.post('/user/create-test-users');
     return res.data;
   }
 };

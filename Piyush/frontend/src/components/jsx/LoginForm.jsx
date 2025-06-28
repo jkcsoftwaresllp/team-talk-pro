@@ -15,51 +15,74 @@ function LoginForm({ setUser }) {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
+
     try {
       const response = await apiClient.login(formData);
-      localStorage.setItem('token', response.token); // Store JWT token
-      setUser(response.user); // Set user state
-      navigate('/chat');
+      console.log('Login response:', response);
+      
+      // Store user data in localStorage
+      localStorage.setItem('user', JSON.stringify(response.user));
+      
+      // Set user state
+      setUser(response.user);
+      
+      // Navigate to user list
+      navigate('/users');
     } catch (err) {
-      setError(err.message);
+      console.error('Login error:', err);
+      if (err.response) {
+        setError(err.response.data.message);
+      } else if (err.request) {
+        setError("No response from server");
+      } else {
+        setError("Error: " + err.message);
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>Login</h2>
-      <form className={styles.form} onSubmit={handleSubmit}>
+    <div className={styles.loginContainer}>
+      <form onSubmit={handleSubmit} className={styles.loginForm}>
+        <h2>Login</h2>
+        
+        <ErrorMessage message={error} />
+        
         <FormField
           label="Username"
           type="text"
           name="username"
           value={formData.username}
           onChange={handleChange}
-          placeholder="Enter username"
+          placeholder="Enter your username"
         />
+        
         <FormField
           label="Password"
           type="password"
           name="password"
           value={formData.password}
           onChange={handleChange}
-          placeholder="Enter password"
+          placeholder="Enter your password"
         />
-        <ErrorMessage message={error} />
-        <button className={styles.submit} type="submit" disabled={loading}>
-          {loading ? 'Processing...' : 'Login'}
+        
+        <button type="submit" disabled={loading} className={styles.submitButton}>
+          {loading ? 'Logging in...' : 'Login'}
         </button>
-        <p className={styles.toggle}>
-          Don't have an account? <Link className={styles.toggleLink} to="/register">Register</Link>
+        
+        <p className={styles.switchForm}>
+          Don't have an account? <Link to="/register">Register here</Link>
         </p>
       </form>
     </div>

@@ -3,17 +3,39 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-async function mysql_db(){
-  const db = await mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-});
+async function mysql_db() {
+  try {
+    // First, connect without specifying a database to create it
+    const connection = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+    });
 
-console.log('Connected to MySQL');
-return db;
+    // Create database if it doesn't exist
+    await connection.execute(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME}\``);
+    console.log(`Database '${process.env.DB_NAME}' created or already exists`);
+    
+    // Close the initial connection
+    await connection.end();
+
+    // Now connect to the specific database
+    const db = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
+    });
+
+    console.log('Connected to MySQL database:', process.env.DB_NAME);
+    return db;
+  } catch (error) {
+    console.error('Database connection error:', error);
+    throw error;
+  }
 }
+
+export default mysql_db;
 
 
 // Create a db
@@ -87,4 +109,5 @@ WHERE condition
 //   console.log(error);
 // }
 
-export default mysql_db;
+// export default mysql_db;
+
