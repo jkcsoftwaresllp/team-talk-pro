@@ -1,4 +1,4 @@
-import { db } from '../Server/config/db.js';
+import { db } from '../config/db.js';
 import { getIO } from '../sockets/chatSocket.js';
 
 // Get paginated messages for a chat

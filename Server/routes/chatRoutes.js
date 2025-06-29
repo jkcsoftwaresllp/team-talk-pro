@@ -3,9 +3,9 @@ import {
   getChatMessages,
   searchMessages,
   deleteMessage
-} from '../Server/controllers/chatController.js';
+} from '../controllers/chatController.js';
 
-import { protect } from '../Server/middleware/authMiddleware.js';
+import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 

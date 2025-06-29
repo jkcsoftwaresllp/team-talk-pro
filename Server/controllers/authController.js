@@ -1,4 +1,4 @@
-import { db } from '../Server/config/db.js';
+import { db } from '../config/db.js';
 import bcrypt from 'bcryptjs';
 import { generateToken } from '../utils/generateToken.js';
 
@@ -72,4 +72,13 @@ export const updateProfile = async (req, res) => {
 export const logoutUser = (req, res) => {
   res.clearCookie('token');
   res.json({ message: 'Logged out successfully' });
+};
+export const toggleSound = async (req, res) => {
+  const { enabled } = req.body;
+  try {
+    await db.query('UPDATE users SET sound_enabled = ? WHERE id = ?', [enabled, req.user]);
+    res.json({ message: 'Sound setting updated', enabled });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to update setting', error: err.message });
+  }
 };
