@@ -1,8 +1,4 @@
-body{
-  background: linear-gradient(to right, #ff7e5f, #feb47b);
-}
-
-.container {
+.loginContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,14 +7,8 @@ body{
   background: linear-gradient(to right, #ff7e5f, #feb47b);
   padding: 1rem;
 }
-.title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #ffffff;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-.form {
+
+.loginForm {
   background-color: #FF7043;
   padding: 2rem;
   border-radius: 8px;
@@ -28,7 +18,32 @@ body{
   display: flex;
   flex-direction: column;
 }
-.submit {
+
+.loginForm h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Optional if your FormField doesn't already handle spacing */
+.loginForm :global(.formField) {
+  margin-bottom: 1rem;
+}
+
+/* Error message style if not already defined inside ErrorMessage */
+.errorMessage {
+  color: #fff0f0;
+  background-color: rgba(255, 0, 0, 0.2);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.submitButton {
   padding: 0.75rem;
   background-color: #ffffff;
   color: #000000;
@@ -39,23 +54,29 @@ body{
   cursor: pointer;
   transition: background-color 0.2s;
 }
-.submit:hover {
+
+.submitButton:hover {
   background-color: #ff9372;
 }
-.submit:disabled {
+
+.submitButton:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
 }
-.toggle {
+
+.switchForm {
   text-align: center;
   margin-top: 1rem;
   font-size: 0.9rem;
   color: #ffffff;
 }
-.toggleLink {
+
+.switchForm a {
   color: #ffffff;
   text-decoration: none;
 }
-.toggleLink:hover {
+
+.switchForm a:hover {
   text-decoration: underline;
 }
+

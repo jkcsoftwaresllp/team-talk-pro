@@ -3,9 +3,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import FormField from './FormField';
 import ErrorMessage from './ErrorMessage';
 import styles from '../css/RegistrationForm.module.css';
-// import apiClient from '../../services/apiClient';
+import apiClient from '../helper/apiClient';
 
-function RegistrationForm() {
+function RegistrationForm({ setUser }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
@@ -19,19 +19,44 @@ function RegistrationForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setError('');
+  //   setLoading(true);
+  //   try {
+  //     await apiClient.register(formData);
+  //     navigate('/login');
+  //   } catch (err) {
+  //     setError(err.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
-    try {
-      await apiClient.register(formData);
-      navigate('/login');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+  e.preventDefault();
+  setError('');
+  setLoading(true);
+  try {
+    console.log("Sending request:", formData);
+    const response = await apiClient.register(formData);
+    console.log("Success:", response);
+    setUser(response.user);
+    navigate('/login');
+  } catch (err) {
+    console.error("Error:", err);
+    if (err.response) {
+      setError(err.response.data.message);
+    } else if (err.request) {
+      setError("No response from server");
+    } else {
+      setError("Error: " + err.message);
     }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className={styles.container}>
